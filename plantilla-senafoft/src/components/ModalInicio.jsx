@@ -13,11 +13,10 @@ import {AuthContext} from '../context/AuthContext'
 const ModalInicio = ({open, handleClose}) => {
     const {setIdPartida} = useContext(GlobalContext)
     const {user} = useContext(AuthContext)
-    console.log(user)
     const [creditosIniciales, setCreditosIniciales] = useState();
     const crearPartida = async()=>{
         const response = await axios.post('http://127.0.0.1:30001/partida',{
-            nombre , creditosIniciales
+            usuario:user._id , creditosIniciales
         })
         if(response.data.msg){
             setIdPartida(response.data.partida._id)

@@ -7,20 +7,13 @@ import axios from "axios";
 const Inicio = () => {
   const [modalInicio, setModalInicio] = useState(false);
   const { idPartida } = useContext(GlobalContext);
-  const [partida, setPartida] = useState({
-    acertietos: 0,
-    creditosFinal: 0,
-    creditosIniciales: 10000,
-    desaciertos: 0,
-    nombre: "brayan delgado",
-    numeroIntentos: 0,
-  });
+  const [partida, setPartida] = useState();
   const [valorApostar, setValorApostar] = useState(0);
   const [numeroRandom, setNumeroRandom] = useState([]);
   const handleClose = () => {
     setModalInicio(false);
   };
-//   console.log(idPartida);
+ console.log(idPartida);
 
   useEffect(() => {
     const traerParitda = async () => {
@@ -28,12 +21,13 @@ const Inicio = () => {
         const response = await axios.get(
           `http://127.0.0.1:30001/partida/${idPartida}`
         );
-        setPartida(response.data.partidasUser);
+        setPartida(response.data.partidasUser[0]);
       }
     };
     traerParitda();
   }, [idPartida]);
 
+  console.log(partida)
   const [num1, setNum1] = useState(null);
   const [num2, setNum2] = useState(null);
   const [num3, setNum3] = useState(null);
@@ -104,7 +98,6 @@ const Inicio = () => {
               </div>
               <button
                 onClick={() => {
-                    // numRandom()
                     handleApostar()
                 }}
                 className="bg-blue-gray-800 text-white shadow-md w-96 py-3 rounded-lg"

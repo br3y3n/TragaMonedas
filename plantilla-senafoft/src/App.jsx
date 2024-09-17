@@ -1,19 +1,20 @@
 import { BrowserRouter } from "react-router-dom";
 import GlobalContextProvider from "./context/GlobalContext";
+import AuthContextProvider from "./context/AuthContext";
 
 import AllRoutes from "./routes/AllRoutes.routes";
 
 
-import { GlobalContext } from "./context/GlobalContext.jsx";
-
 const App = () => {
 
   return (
-    <GlobalContextProvider>
-      <BrowserRouter>
-        <AllRoutes/>
-      </BrowserRouter>
-    </GlobalContextProvider>
+    <AuthContextProvider>
+      <GlobalContextProvider>
+        <BrowserRouter>
+          <AllRoutes/>
+        </BrowserRouter>
+      </GlobalContextProvider>
+    </AuthContextProvider>
   )
 }
 

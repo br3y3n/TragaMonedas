@@ -22,7 +22,7 @@ export const createPartida = async (req,res)=>{
 export const getPartida = async(req, res)=>{
     try {
         const id = req.params
-        const partidasUser = await PartidaModel.find({_id:id})
+        const partidasUser = await PartidaModel.find({_id:id}).populate("usuario");
 
         if(partidasUser){
             return res.status(200).json({

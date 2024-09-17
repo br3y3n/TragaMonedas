@@ -7,15 +7,21 @@ import Home from "../pages/Home";
 import Users from "../pages/Users";
 import Inicio from "../pages/Inicio";
 
+import PrivateRoutes from "./PrivateRoutes.routes";
+
 const AllRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<Home/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
-            <Route path="/usuarios" element={<Users/>} />
-            <Route path="/estadisticas" element={<Charts/>} />
-            <Route path="/inicio" element={<Inicio/>} />
+
+            <Route element={<PrivateRoutes/>}>
+                {/* <Route path="/" element={<Home/>} />
+                <Route path="/usuarios" element={<Users/>} />
+                <Route path="/estadisticas" element={<Charts/>} /> */}
+                <Route path="/inicio" element={<Inicio/>} />
+            </Route>
+
         </Routes>
     );
 }

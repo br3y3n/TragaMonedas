@@ -5,11 +5,13 @@ export const GlobalContext = createContext();
 const GlobalContextProvider = ({ children }) => {
     
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
+    const [idPartida, setIdPartida] = useState()
     return (
         <GlobalContext.Provider value={{
             isMenuOpen,
-            setIsMenuOpen
+            setIsMenuOpen,
+            idPartida,
+            setIdPartida
         }}>
             { children }
         </GlobalContext.Provider>

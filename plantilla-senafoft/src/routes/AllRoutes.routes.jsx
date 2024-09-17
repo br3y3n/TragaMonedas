@@ -5,6 +5,7 @@ import Register from "../pages/Register";
 import Charts from "../pages/Charts";
 import Home from "../pages/Home";
 import Users from "../pages/Users";
+import Inicio from "../pages/Inicio";
 
 const AllRoutes = () => {
     return (
@@ -14,6 +15,7 @@ const AllRoutes = () => {
             <Route path="/register" element={<Register/>} />
             <Route path="/usuarios" element={<Users/>} />
             <Route path="/estadisticas" element={<Charts/>} />
+            <Route path="/inicio" element={<Inicio/>} />
         </Routes>
     );
 }

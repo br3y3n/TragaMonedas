@@ -3,6 +3,9 @@ import GlobalContextProvider from "./context/GlobalContext";
 
 import AllRoutes from "./routes/AllRoutes.routes";
 
+
+import { GlobalContext } from "./context/GlobalContext.jsx";
+
 const App = () => {
 
   return (

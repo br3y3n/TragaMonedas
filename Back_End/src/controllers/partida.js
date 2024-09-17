@@ -1,4 +1,4 @@
-import PartidaModel from "../models/partida"
+import PartidaModel from "../models/partida.js"
 
 export const createPartida = async (req,res)=>{
     try {

@@ -20,8 +20,6 @@ export const register = async(req, res) => {
         // const hasPassword = await bcrypt.hash();
 
 
-
-
         return res.status(201).json({
             message: "Registro exitoso",
             data: data,

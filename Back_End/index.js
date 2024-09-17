@@ -13,6 +13,7 @@ app.use(cors({
 }));
 
 
+
 import routesPartida from './src/routes/partida.js'
 import authRouter from './src/routes/auth.routes.js'
 

@@ -1,6 +1,7 @@
 import { Button } from "@material-tailwind/react";
 import React, { useContext, useEffect, useState } from "react";
 import ModalInicio from "../components/ModalInicio";
+import ModalAjustes from "../components/ModalAjustes";
 import { GlobalContext } from "../context/GlobalContext";
 import axios from "axios";
 const Inicio = () => {
@@ -46,7 +47,7 @@ const Inicio = () => {
     <article>
       <div className=" mt-10 ml-5 flex gap-5">
         <Button onClick={() => setModalInicio(true)}>Inicio</Button>
-        <Button>Ajustes</Button>
+        <ModalAjustes/>
       </div>
 
       <section>

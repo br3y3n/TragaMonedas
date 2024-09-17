@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, redirect } from "react-router-dom";
 
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -16,8 +16,8 @@ const AllRoutes = () => {
             <Route path="/register" element={<Register/>} />
 
             <Route element={<PrivateRoutes/>}>
-                {/* <Route path="/" element={<Home/>} />
-                <Route path="/usuarios" element={<Users/>} />
+                <Route path="/" element={<Inicio/>} />
+                {/*<Route path="/usuarios" element={<Users/>} />
                 <Route path="/estadisticas" element={<Charts/>} /> */}
                 <Route path="/inicio" element={<Inicio/>} />
             </Route>

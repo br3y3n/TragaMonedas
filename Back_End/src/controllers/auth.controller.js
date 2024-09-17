@@ -56,7 +56,7 @@ export const login = async(req, res) => {
         jwt.sign(
             { _id: foundUser._id },
             "hash secret",
-            { expiresIn: "1hr" },
+            { expiresIn: "7hr" },
             (error, token) => {
                 if (error) return res.status(403).json({
                     message: "No tienes permiso",

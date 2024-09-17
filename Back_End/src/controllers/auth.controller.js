@@ -15,19 +15,21 @@ export const register = async(req, res) => {
             message: "Usuario no encontrado",
         });
 
-        // const user = new UserModel(data);
+        const user = new UserModel(data);
 
-        // const hasPassword = await bcrypt.hash();
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(data.password, salt);
 
+        await user.save();
 
         return res.status(201).json({
             message: "Registro exitoso",
-            data: data,
+            data: user,
         });
 
-
     } catch (error) {
-        res.status(500).json({
+        console.log(error);
+        return res.status(500).json({
             message: "error al crear el usuario",
             error: error.message,
         });

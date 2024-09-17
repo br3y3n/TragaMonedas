@@ -14,8 +14,10 @@ app.use(cors({
 
 
 import routesPartida from './src/routes/partida.js'
+import authRouter from './src/routes/auth.routes.js'
 
 app.use('/partida', routesPartida)
+app.use('/api', authRouter)
 
 const PORT = 30001
 

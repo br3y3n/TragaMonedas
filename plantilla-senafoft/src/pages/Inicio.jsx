@@ -19,7 +19,7 @@ const Inicio = () => {
   const handleClose = () => {
     setModalInicio(false);
   };
-  console.log(idPartida);
+//   console.log(idPartida);
 
   useEffect(() => {
     const traerParitda = async () => {
@@ -33,15 +33,20 @@ const Inicio = () => {
     traerParitda();
   }, [idPartida]);
 
-  const numRandom =()=>{
-      if(numeroRandom.length >=3){
-    setInterval(()=>{
-        const num = Math.floor(Math.random() * 10)
-        setNumeroRandom(prev => [... prev, num])
-        },500)
-    }
+  const [num1, setNum1] = useState(null);
+  const [num2, setNum2] = useState(null);
+  const [num3, setNum3] = useState(null);
+
+  const randomNumber = () => {
+    const num = Math.floor(Math.random() * 10);
+    return num
   }
-  console.log(numeroRandom)
+
+  const handleApostar = () => {
+      setNum3(randomNumber())
+      setNum1(randomNumber())
+      setNum2(randomNumber())
+  }
   return (
     <article>
       <div className=" mt-10 ml-5 flex gap-5">
@@ -77,7 +82,11 @@ const Inicio = () => {
               <h1 className="text-blue-gray-300 text-4xl mt-5 drop-shadow-md">
                 Numero Random
               </h1>
-              <h1 className="text-9xl drop-shadow-lg font-extralight">756</h1>
+                <div className="flex gap-3">
+                    <h1 className="text-9xl drop-shadow-lg font-extralight">{num1}</h1>
+                    <h1 className="text-9xl drop-shadow-lg font-extralight">{num2}</h1>
+                    <h1 className="text-9xl drop-shadow-lg font-extralight">{num3}</h1>
+                </div>
               <h1 className="text-blue-gray-300 text-4xl mt-5 drop-shadow-md">
                 Valor Apostar
               </h1>
@@ -92,7 +101,13 @@ const Inicio = () => {
                   ➖
                 </button>
               </div>
-              <button onClick={()=>numRandom()} className="bg-blue-gray-800 text-white shadow-md w-96 py-3 rounded-lg">
+              <button
+                onClick={() => {
+                    // numRandom()
+                    handleApostar()
+                }}
+                className="bg-blue-gray-800 text-white shadow-md w-96 py-3 rounded-lg"
+              >
                 Apostar
               </button>
             </div>

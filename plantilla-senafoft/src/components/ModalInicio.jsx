@@ -9,9 +9,11 @@ import {
 import axios from "axios";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
+import {AuthContext} from '../context/AuthContext'
 const ModalInicio = ({open, handleClose}) => {
     const {setIdPartida} = useContext(GlobalContext)
-    const nombre = 'brayan delgado'
+    const {user} = useContext(AuthContext)
+    console.log(user)
     const [creditosIniciales, setCreditosIniciales] = useState();
     const crearPartida = async()=>{
         const response = await axios.post('http://127.0.0.1:30001/partida',{

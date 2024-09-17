@@ -12,7 +12,6 @@ export const login = async(credentials) => {
     }
 }
 
-
 export const register = async(data) => {
     try {
         
@@ -33,7 +32,6 @@ export const verifyToken = async() => {
         return response;
 
     } catch (error) {
-        console.log(error);
         return error;
     }
 }

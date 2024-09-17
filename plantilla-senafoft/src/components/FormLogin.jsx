@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
     Card,
     Input,
@@ -6,6 +6,12 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import Loader from "./Loader.jsx";
+
+import { login } from "../services/auth.services.js";
+
+import { AuthContext } from "../context/AuthContext.jsx";
    
 const  FormLogin = () => {
 
@@ -13,21 +19,46 @@ const  FormLogin = () => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
+
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        const formData = {
+    const { setUser, setIsAuthenticated } = useContext(AuthContext)
+
+    const handleLogin = async() => {
+        setLoading(true);
+        const credentials = {
             email,
             password
         }
-        console.log(formData);
+
+        try {
+            
+            const response = await login(credentials);
+            if (response.status == 404) return toast.error("El usuario no existe.")
+            if (response.status == 400) return toast.error("Credenciales incorrectas.");
+
+            setIsAuthenticated(true);
+            setUser(response.data.data.user);
+
+            navigate("/inicio");
+            setLoading(false);
+
+
+
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
         
-        navigate("/");
     }
 
 
     return (
         <Card className="w-full max-w-[450px] flex p-7 " color="white" shadow={true}>
+            <ToastContainer/>
+            { loading && <Loader/> }
             <h1 className="font-semibold text-black text-3xl">¡Iniciar Sesión!</h1>
             <Typography color="gray" className="mt-1 font-normal">
                 Te estabamos esperando.

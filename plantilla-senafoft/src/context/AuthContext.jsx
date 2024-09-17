@@ -3,7 +3,6 @@ import Cookie from "js-cookie";
 
 import { verifyToken } from "../services/auth.services.js";
 
-
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
@@ -19,31 +18,47 @@ const AuthContextProvider = ({ children }) => {
         const checkLogin = async() => {
 
             const cookies = Cookie.get();
+            
+            if (!cookies.token) {
+                setUser(null);
+                setIsAuthenticated(false);
+                setLoading(false);
+            }
 
             try {
 
-                if (!cookies.token) {
-                    setUser(null);
+                const verifyTokenResponse = await verifyToken(cookies.token);
+                if (!verifyTokenResponse) {
+                    setUser(null);  
                     setIsAuthenticated(false);
-                    setLoading(false);
+                    return setLoading(false);
                 }
-
+                
+                setUser(verifyTokenResponse.data);
+                setIsAuthenticated(true);
+                return setLoading(false);
 
                 
             } catch (error) {
                 setUser(null);
                 setIsAuthenticated(false);
-                setLoading(false);
+                return setLoading(false);
             }
         }
+
+        checkLogin();
 
     }, []);
 
 
-
     return (
         <AuthContext.Provider value={{
-
+            user,
+            setUser,
+            isAuthenticated,
+            setIsAuthenticated,
+            loading,
+            setLoading
         }}>
             { children }
         </AuthContext.Provider>

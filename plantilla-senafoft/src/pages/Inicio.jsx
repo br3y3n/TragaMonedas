@@ -9,11 +9,13 @@ const Inicio = () => {
   const { idPartida } = useContext(GlobalContext);
   const [partida, setPartida] = useState();
   const [valorApostar, setValorApostar] = useState(0);
-  const [numeroRandom, setNumeroRandom] = useState([]);
+  const [aciertos, setAciertos] = useState(0)
+  const [desaciertos, setDesaciertos] = useState(0)
+  const [numeroIntentos, setNumeroIntentos] = useState(0)
+  const [creditosIniciales, setCreditosIniciales] = useState(0)
   const handleClose = () => {
     setModalInicio(false);
   };
- console.log(idPartida);
 
   useEffect(() => {
     const traerParitda = async () => {
@@ -22,14 +24,14 @@ const Inicio = () => {
           `http://127.0.0.1:30001/partida/${idPartida}`
         );
         setPartida(response.data.partidasUser[0]);
+        setCreditosIniciales(response.data.partidasUser[0].creditosIniciales)
       }
     };
     traerParitda();
   }, [idPartida]);
 
-  console.log(partida)
   const [num1, setNum1] = useState(null);
-  const [num2, setNum2] = useState(null);
+  const [num2, setNum2] = useState("");
   const [num3, setNum3] = useState(null);
 
   const randomNumber = () => {
@@ -37,10 +39,49 @@ const Inicio = () => {
     return num
   }
 
-  const handleApostar = () => {
-      setNum3(randomNumber())
+  const handleApostar =async () => {
+    if(valorApostar===0){
+        return alert("primero escoge el valor apostar 💲")
+    }
+    if(creditosIniciales ===0){
+        if(partida._id){
+            const data={
+                creditosIniciales: partida.creditosIniciales,
+                creditosFinal : creditosIniciales,
+                numeroIntentos,
+                acertietos: aciertos,
+                desaciertos
+            }
+            console.log(partida)
+            const response = await axios.patch(`http://127.0.0.1:30001/partida/${partida._id}`, data)
+            setAciertos(0)
+            setDesaciertos(0)
+            numeroIntentos(0)
+
+            console.log(response.data)
+
+        }
+       return alert("No tienes creditos 🪙")
+    }
+    setNum3(randomNumber())
       setNum1(randomNumber())
       setNum2(randomNumber())
+      handleCompare()
+  }
+
+  console.log(partida)
+  const handleCompare =()=>{
+    if(num1 == num2 && num1 == num3 && num2 == num1 && num2 == num3 && num3 == num1 && num3 == num2){
+        setCreditosIniciales(creditosIniciales + valorApostar)
+        setAciertos(aciertos + 1)
+        setNumeroIntentos(numeroIntentos+1)
+        alert("ganaste 🥳🎉🎇")
+    }else{
+        setDesaciertos(desaciertos+1)
+        setNumeroIntentos(numeroIntentos + 1)
+        setCreditosIniciales(creditosIniciales - valorApostar)
+        alert("perdiste")
+    }
   }
   return (
     <article>
@@ -50,26 +91,25 @@ const Inicio = () => {
       </div>
 
       <section>
-        {partida && (
           <div>
             <div className="flex gap-10 justify-end mr-10 text-lg drop-shadow-lg font-semibold">
               <div className="text-center">
-                <h1>Creditos iniciales</h1>
+                <h1> iniciales</h1>
                 <h1 className="text-blue-gray-700">
-                  {partida.creditosIniciales}
+                  {creditosIniciales}
                 </h1>
               </div>
               <div className="text-center">
                 <h1>aciertos</h1>
-                <h1 className="text-blue-gray-700">{partida.acertietos}</h1>
+                <h1 className="text-blue-gray-700">{aciertos}</h1>
               </div>
               <div className="text-center">
                 <h1>desaciertos</h1>
-                <h1 className="text-blue-gray-700">{partida.desaciertos}</h1>
+                <h1 className="text-blue-gray-700">{desaciertos}</h1>
               </div>
               <div className="text-center">
                 <h1>numero intentos</h1>
-                <h1 className="text-blue-gray-700">{partida.numeroIntentos}</h1>
+                <h1 className="text-blue-gray-700">{numeroIntentos}</h1>
               </div>
             </div>
 
@@ -89,10 +129,10 @@ const Inicio = () => {
                 {valorApostar}
               </h1>
               <div className="flex gap-5 text-3xl">
-                <button onClick={() => setValorApostar(valorApostar + 10)}>
+                <button onClick={() => setValorApostar(valorApostar + 1)}>
                   ➕
                 </button>
-                <button onClick={() => setValorApostar(valorApostar - 10)}>
+                <button onClick={() => setValorApostar(valorApostar ==0 ?-0 :valorApostar -1)}>
                   ➖
                 </button>
               </div>
@@ -106,7 +146,7 @@ const Inicio = () => {
               </button>
             </div>
           </div>
-        )}
+        
       </section>
 
       <ModalInicio open={modalInicio} handleClose={handleClose} />

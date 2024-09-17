@@ -14,7 +14,9 @@ const ModalInicio = ({open, handleClose}) => {
     const {setIdPartida} = useContext(GlobalContext)
     const {user} = useContext(AuthContext)
     const [creditosIniciales, setCreditosIniciales] = useState();
+    console.log(user)
     const crearPartida = async()=>{
+      if(user){
         const response = await axios.post('http://127.0.0.1:30001/partida',{
             usuario:user._id , creditosIniciales
         })
@@ -23,6 +25,7 @@ const ModalInicio = ({open, handleClose}) => {
             alert(`tus creditos iniciales son ${creditosIniciales}`)
             handleClose()
         }
+      }
     }
   return (
     <>
